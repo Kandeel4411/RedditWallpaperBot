@@ -9,7 +9,7 @@ A Bot for Reddit that gets top Hot sorted picture from a given Subreddit and set
   `pip install pipenv`
   
   * Clone repository through git. <br>
-  `git clone https://github.com/Kandeel4411/RedditBackground.git`
+  `git clone https://github.com/Kandeel4411/RedditWallpaperBot.git`
   
   * Open the cloned folder in terminal and run pipenv install. <br>
   ` cd RedditBackground && pipenv install `
