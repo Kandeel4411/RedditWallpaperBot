@@ -1,5 +1,5 @@
 # RedditBackground
-A Bot for Reddit that gets top Hot sorted picture from a given Subreddit and sets it as background.
+A Bot for Reddit that gets top Hot sorted picture from a given Subreddit and sets it as background. (Windows only currently)
 
 ## Prerequisite
 * Must have git, python and pip installed.
@@ -15,7 +15,7 @@ A Bot for Reddit that gets top Hot sorted picture from a given Subreddit and set
   ` cd RedditWallpaperBot && pipenv install `
 
 ## Usage:
-  ![Usage Demo](https://j.gifs.com/XLQGRk.gif)
+  ![Usage Demo](https://media.giphy.com/media/Tk0hzmccJ2rLlbRZxT/giphy.gif)
   * Open cloned folder and run: <br>
   ` pipenv shell `
   
