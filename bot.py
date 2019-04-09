@@ -9,7 +9,7 @@ logger = logging.getLogger(__name__)
 
 
 def getReddit(login):
-    """Returns reddit object """
+    """Input: Dict with client_id and client_secret """
     try:
         reddit = praw.Reddit(
             client_id=login["client_id"],
@@ -20,9 +20,7 @@ def getReddit(login):
         logging.exception(f"{e}")
         logging.critical("Couldn't create Reddit object")
         sys.exit()
-    else:
-        logger.info(f"Successfully created Reddit Object : {reddit}")
-        return reddit
+    return reddit
 
 
 def getSubreddit(reddit, name):

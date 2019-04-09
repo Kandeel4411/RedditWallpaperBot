@@ -13,7 +13,7 @@ import sys
 
 import requests
 
-import botFunctions as bot
+import bot
 
 config = configparser.RawConfigParser()
 config.read("etc/config.ini")
@@ -85,14 +85,14 @@ def main():
     logger.debug("Starting loop")
     while True:
         logger.debug("Getting user input")
-        choice = input()
-        if choice == "Y" or choice == "y":
+        choice = input().lower()
+        if choice == "y":
             logger.info(f"User choice: {choice}")
             bot.setImageBackground(path=image_path)
             logger.debug("Set picture as background")
             print("Done.\n")
             break
-        elif choice == "n" or choice == "N":
+        elif choice == "n":
             logger.info(f"User choice: {choice}")
             logger.debug("Displaying image full path")
             print(
