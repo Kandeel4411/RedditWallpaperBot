@@ -9,12 +9,12 @@ SPI_SETDESKWALLPAPER = 20
 logger = logging.getLogger(__name__)
 
 
-def get_reddit(client_id,client_secret,user_agent):
+def get_reddit(login):
     try:
         reddit = praw.Reddit(
-            client_id=client_id,
-            client_secret=client_secret,
-            user_agent=user_agent
+            client_id=login["client_id"],
+            client_secret=login["client_secret"],
+            user_agent=login["user_agent"]
         )
     except Exception as e:
         logger.exception(f"{e}")
