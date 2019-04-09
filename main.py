@@ -8,7 +8,7 @@ Subreddit and sets it as background.
 """
 import configparser
 import logging
-import os
+import pathlib
 import sys
 
 import requests
@@ -50,7 +50,6 @@ def main():
     print(f"Title: {picture.title}")
     print(f"Author: {picture.author.name}\n")
 
-    # Downloading Picture
     print("Downloading...")
     try:
         r = requests.get(url=picture.url)
@@ -65,14 +64,13 @@ def main():
     print("Done.\n")
 
     # Getting image extension from url
-    image_ext = os.path.splitext(picture.url)[1]
+    image_ext = pathlib.Path(picture.url).suffix
 
-    # Opening and saving picture
+    # Getting picture path
     image_filename = picture.author.name + image_ext
-    image_path = os.path.join(os.path.abspath("images/"), image_filename)
+    image_path = pathlib.Path("images/").resolve() / image_filename
     bot.save_image(path=image_path, image=r.content)
 
-    # Setting picture as background[Y/N] User choice
     print("Set picture as background? [Y/N] : ", end="")
     logger.debug("Starting loop")
     while True:
