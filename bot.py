@@ -17,7 +17,7 @@ def get_reddit(login):
             client_secret=login["client_secret"],
             user_agent=login["user_agent"]
         )
-        
+
     except praw.exceptions.ClientException as e:
         logger.exception(f"{e}")
         logger.critical("Couldn't create Reddit object")
@@ -30,8 +30,8 @@ def get_subreddit(reddit, name):
     try:
         subreddit = reddit.subreddit(name)
     except TypeError as e:
-        print( 
-        "Error: Invalid Subreddit. Please try again with valid Subreddit.\n"
+        print(
+            "Error: Invalid Subreddit. Please try again with valid Subreddit.\n"
         )
         logger.exception(f"{e}")
         logger.critical(f"Couldn't create Subreddit Object")
@@ -56,7 +56,7 @@ and how it's sorted"""
                 hasattr(submission, "post_hint")
                 and submission.post_hint == "image"
                 and os.path.splitext(submission.url)[1] != ".gif"
-                ):
+            ):
                 logger.info(f"{submission} Has Picture ")
                 logger.debug("Finished Iteration")
                 return submission
@@ -75,7 +75,7 @@ and how it's sorted"""
             "Error: Failed to establish a new connection. Please check your connection and try again."
         )
         sys.exit()
-    
+
     print(
         "Error: No Picture found in subreddit."
         " Please try again with different Subreddit.")
@@ -116,8 +116,30 @@ def save_image(path, image):
     logger.info(f"Saved file as {path}")
 
 
+def set_image_background(image_path: str):
+    """Sets given image image_path as background """
 
-def set_image_background(path):
-    """Sets given image path as background """
+    print("Set picture as background? [Y/N] : ", end="")
+    logger.debug("Starting loop")
+    while True:
+        logger.debug("Getting user input")
+        choice = input().lower()
+        if choice == "y":
+            logger.info(f"User choice: {choice}")
+            # Windows-only support currently
+            set_windows_background(image_path=image_path)
+            logger.debug("Set picture as background")
+            print("Done.\n")
+            break
+        elif choice == "n":
+            logger.info(f"User choice: {choice}")
+            logger.debug("Displaying image full path")
+            print(
+                f"Image path is : {image_path}"
+            )
+            break
+
+
+def set_windows_background(image_path: str):
     ctypes.windll.user32.SystemParametersInfoW(
-        SPI_SETDESKWALLPAPER, 0, path, 0)
+        SPI_SETDESKWALLPAPER, 0, image_path, 0)

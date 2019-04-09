@@ -69,26 +69,9 @@ def main():
     # Getting picture path
     image_filename = picture.author.name + image_ext
     image_path = pathlib.Path("images/").resolve() / image_filename
-    bot.save_image(path=image_path, image=r.content)
 
-    print("Set picture as background? [Y/N] : ", end="")
-    logger.debug("Starting loop")
-    while True:
-        logger.debug("Getting user input")
-        choice = input().lower()
-        if choice == "y":
-            logger.info(f"User choice: {choice}")
-            bot.set_image_background(path=image_path)
-            logger.debug("Set picture as background")
-            print("Done.\n")
-            break
-        elif choice == "n":
-            logger.info(f"User choice: {choice}")
-            logger.debug("Displaying image full path")
-            print(
-                f"Image path is : {image_path}"
-            )
-            break
+    bot.save_image(path=image_path, image=r.content)
+    bot.set_image_background(image_path=str(image_path))
 
     print("Exiting..\n")
     logger.debug("End of program")
