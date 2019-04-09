@@ -8,18 +8,18 @@ A Bot for Reddit that gets top Hot sorted picture from a given Subreddit and set
   * Download the repository by clicking the green "Clone or download" button on the top-right of the repository's main page, then click on "Download ZIP"<br>
   
   * Extract folder to desired location
-  
-  <i>(Installing in closed environment)</i>:
+ <br>
+ <i>(Installing in closed environment)</i>:
   * Install pipenv through pip. <br>
   `pip install pipenv`
   
   * Open the extracted folder in terminal and run pipenv install. <br>
   ` cd RedditWallpaperBot && pipenv install `
 
-  #### Or:
+ #### Or:
   
-  <i>(Installing globally)</i>:
-  * Open the extracted folder in terminal and run:
+ <i>(Installing globally)</i>:
+  * Open the extracted folder in terminal and run: <br>
   ` pip install -r requirements.txt `
 
 ## Usage:
