@@ -8,7 +8,8 @@ import praw
 SPI_SETDESKWALLPAPER = 20
 logger = logging.getLogger(__name__)
 
-def getReddit(login):
+
+def get_reddit(login):
     """Input: Dict with client_id and client_secret """
     try:
         reddit = praw.Reddit(
@@ -17,26 +18,26 @@ def getReddit(login):
             user_agent=login["user_agent"]
         )
     except Exception as e:
-        logging.exception(f"{e}")
-        logging.critical("Couldn't create Reddit object")
+        logger.exception(f"{e}")
+        logger.critical("Couldn't create Reddit object")
         sys.exit()
     return reddit
 
 
-def getSubreddit(reddit, name):
+def get_subreddit(reddit, name):
     """Returns subreddit based on given reddit object and subreddit name"""
     try:
         subreddit = reddit.subreddit(name)
     except Exception as e:
-        logging.exception(f"Error: {e}")
-        logging.critical(f"Couldn't create {subreddit} Subreddit Object")
+        logger.exception(f"Error: {e}")
+        logger.critical(f"Couldn't create {subreddit} Subreddit Object")
         sys.exit()
     else:
         logger.info(f"Successfully created Subreddit Object : {subreddit}")
         return subreddit
 
 
-def getPicturePost(subreddit_sort):
+def get_picture_post(subreddit_sort):
     """Returns picture submission based on the given subreddit
 and how it's sorted"""
 
@@ -57,8 +58,8 @@ and how it's sorted"""
                 return submission
             logger.debug(f"submission: {submission} No Picture")
     except Exception as e:
-        logging.exception(f"{e}")
-        logging.critical("Couldn't access submissions")
+        logger.exception(f"{e}")
+        logger.critical("Couldn't access submissions")
         print(
             "Error: Invalid Subreddit. Please try again with valid Subreddit."
         )
@@ -71,7 +72,7 @@ and how it's sorted"""
         sys.exit()
 
 
-def saveImage(path, image):
+def save_image(path, image):
     """Saves image with given name and contents in bytes to image folder """
     # Creating directory if it doesn't exist
     try:
@@ -108,7 +109,7 @@ def saveImage(path, image):
                 logger.info(f"Saved file as {path}")
 
 
-def setImageBackground(path):
+def set_image_background(path):
     """Sets given image path as background """
     ctypes.windll.user32.SystemParametersInfoW(
         SPI_SETDESKWALLPAPER, 0, path, 0)

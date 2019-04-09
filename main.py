@@ -38,7 +38,7 @@ def main():
 
     # Create reddit object
     login_config = config["Login"]
-    reddit = bot.getReddit(login=login_config)
+    reddit = bot.get_reddit(login=login_config)
 
     # Getting user-specified subreddit
     subreddit_name = input("Enter the subreddit you want to access: ")
@@ -48,10 +48,10 @@ def main():
         sys.exit()
 
     # Create subreddit object
-    subreddit = bot.getSubreddit(reddit=reddit, name=subreddit_name)
+    subreddit = bot.get_subreddit(reddit=reddit, name=subreddit_name)
 
     # Get picture submission based on 'Hot' sort
-    picture = bot.getPicturePost(subreddit_sort=subreddit.hot())
+    picture = bot.get_picture_post(subreddit_sort=subreddit.hot())
 
     # Printing title of picture
     print(f"Title: {picture.title}")
@@ -77,7 +77,7 @@ def main():
     # Opening and saving picture
     image_filename = picture.author.name + image_ext
     image_path = os.path.join(os.path.abspath("images/"), image_filename)
-    bot.saveImage(path=image_path, image=r.content)
+    bot.save_image(path=image_path, image=r.content)
 
     # Setting picture as background[Y/N] User choice
     print("Set picture as background? [Y/N] : ", end="")
@@ -87,7 +87,7 @@ def main():
         choice = input().lower()
         if choice == "y":
             logger.info(f"User choice: {choice}")
-            bot.setImageBackground(path=image_path)
+            bot.set_image_background(path=image_path)
             logger.debug("Set picture as background")
             print("Done.\n")
             break
