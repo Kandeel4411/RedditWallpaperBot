@@ -39,4 +39,8 @@ A Bot for Reddit that gets top Hot sorted picture from a given Subreddit and set
   #### Or:
 
   * Open extracted folder and run main.py script directly by double clicking.
-  
+  <br>
+
+## Usage as Library:
+* <i> Notes: </i>
+If you want to import the bot functions, it by default uses sys.exit() to exit program once an error has been caught. You may want to use bot.raise_bot_exception(option=True) to raise BotExceptions instead that you can catch.
