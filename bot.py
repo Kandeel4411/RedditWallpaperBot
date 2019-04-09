@@ -9,13 +9,12 @@ SPI_SETDESKWALLPAPER = 20
 logger = logging.getLogger(__name__)
 
 
-def get_reddit(login):
-    """Input: Dict with client_id and client_secret """
+def get_reddit(client_id,client_secret,user_agent):
     try:
         reddit = praw.Reddit(
-            client_id=login["client_id"],
-            client_secret=login["client_secret"],
-            user_agent=login["user_agent"]
+            client_id=client_id,
+            client_secret=client_secret,
+            user_agent=user_agent
         )
     except Exception as e:
         logger.exception(f"{e}")
@@ -50,9 +49,11 @@ and how it's sorted"""
     try:
         for submission in subreddit_sort:
             # Is an image tagged post which isn't a gif
-            if hasattr(submission, "post_hint")\
-                    and submission.post_hint == "image"\
-                    and os.path.splitext(submission.url)[1] != ".gif":
+            if (
+                hasattr(submission, "post_hint")
+                and submission.post_hint == "image"
+                and os.path.splitext(submission.url)[1] != ".gif"
+                ):
                 logger.info(f"{submission} Has Picture ")
                 logger.debug("Finished Iteration")
                 return submission

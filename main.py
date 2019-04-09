@@ -37,8 +37,11 @@ def main():
     """)
 
     # Create reddit object
-    login_config = config["Login"]
-    reddit = bot.get_reddit(login=login_config)
+    reddit = bot.get_reddit(
+        client_id=os.environ["client_id"],
+        client_secret=os.environ["client_secret"],
+        user_agent=os.environ["user_agent"]
+    )
 
     # Getting user-specified subreddit
     subreddit_name = input("Enter the subreddit you want to access: ")
