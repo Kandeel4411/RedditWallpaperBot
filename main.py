@@ -18,7 +18,6 @@ import bot
 config = configparser.RawConfigParser()
 config.read("etc/config.ini")
 
-# Setting up Logging configuration
 log_config = config["Logging"]
 logging.basicConfig(
     filename=log_config["filename"],

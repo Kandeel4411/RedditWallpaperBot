@@ -5,8 +5,8 @@ import sys
 
 import praw
 
+SPI_SETDESKWALLPAPER = 20
 logger = logging.getLogger(__name__)
-
 
 def getReddit(login):
     """Input: Dict with client_id and client_secret """
@@ -110,6 +110,5 @@ def saveImage(path, image):
 
 def setImageBackground(path):
     """Sets given image path as background """
-    SPI_SETDESKWALLPAPER = 20
     ctypes.windll.user32.SystemParametersInfoW(
         SPI_SETDESKWALLPAPER, 0, path, 0)
