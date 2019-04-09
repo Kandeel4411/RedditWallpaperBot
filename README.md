@@ -1,4 +1,4 @@
-# RedditBackground
+# RedditWallpaperBot
 A Bot for Reddit that gets top Hot sorted picture from a given Subreddit and sets it as background. (Windows only currently)
 
 ## Prerequisite
