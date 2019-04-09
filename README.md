@@ -2,7 +2,7 @@
 A Bot for Reddit that gets top Hot sorted picture from a given Subreddit and sets it as background. (Windows only currently)
 
 ## Prerequisite
-* Must have git, python and pip installed.
+* Must have python3.6+ installed.
 
 ## Installation:
   * Install pipenv through pip. <br>
