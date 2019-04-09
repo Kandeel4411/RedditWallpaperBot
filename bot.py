@@ -4,6 +4,7 @@ import os
 import sys
 
 import praw
+import prawcore
 
 SPI_SETDESKWALLPAPER = 20
 logger = logging.getLogger(__name__)
@@ -16,7 +17,8 @@ def get_reddit(login):
             client_secret=login["client_secret"],
             user_agent=login["user_agent"]
         )
-    except Exception as e:
+        
+    except praw.exceptions.ClientException as e:
         logger.exception(f"{e}")
         logger.critical("Couldn't create Reddit object")
         sys.exit()
@@ -27,13 +29,14 @@ def get_subreddit(reddit, name):
     """Returns subreddit based on given reddit object and subreddit name"""
     try:
         subreddit = reddit.subreddit(name)
-    except Exception as e:
-        logger.exception(f"Error: {e}")
-        logger.critical(f"Couldn't create {subreddit} Subreddit Object")
+    except TypeError as e:
+        print( 
+        "Error: Invalid Subreddit. Please try again with valid Subreddit.\n"
+        )
+        logger.exception(f"{e}")
+        logger.critical(f"Couldn't create Subreddit Object")
         sys.exit()
-    else:
-        logger.info(f"Successfully created Subreddit Object : {subreddit}")
-        return subreddit
+    return subreddit
 
 
 def get_picture_post(subreddit_sort):
@@ -58,19 +61,26 @@ and how it's sorted"""
                 logger.debug("Finished Iteration")
                 return submission
             logger.debug(f"submission: {submission} No Picture")
-    except Exception as e:
+    except prawcore.exceptions.Redirect as e:
         logger.exception(f"{e}")
-        logger.critical("Couldn't access submissions")
+        logger.critical("Couldn't access subreddit")
         print(
             "Error: Invalid Subreddit. Please try again with valid Subreddit."
         )
         sys.exit()
-    else:
+    except prawcore.RequestException as e:
+        logger.exception(f"{e}")
+        logger.critical("Couldn't establish connection")
         print(
-            "Error: No Picture found in subreddit."
-            " Please try again with different Subreddit.")
-        logger.critical("Couldn't find picture in Subreddit")
+            "Error: Failed to establish a new connection. Please check your connection and try again."
+        )
         sys.exit()
+    
+    print(
+        "Error: No Picture found in subreddit."
+        " Please try again with different Subreddit.")
+    logger.critical("Couldn't find picture in Subreddit")
+    sys.exit()
 
 
 def save_image(path, image):
@@ -81,7 +91,7 @@ def save_image(path, image):
         os.makedirs(os.path.dirname(path))
     except FileExistsError:
         logger.error("Directory already exists")
-    except Exception as e:
+    except OSError:
         print(f"Error : {e}")
         logger.exception(f"{e}")
         logger.critical("Couldn't create directory")
@@ -90,24 +100,21 @@ def save_image(path, image):
     # Creating Image
     try:
         logger.debug(f"Opening {path}")
-        img = open(path, "wb")
-    except Exception as e:
+        with open(path, "wb") as img_file:
+            logger.debug("Writing to file")
+            img_file.write(image)
+    except FileNotFoundError as e:
         print(f"Error: {e}")
         logger.exception(f"{e}")
         logger.critical("Couldn't open file")
         sys.exit()
-    else:
-        with img:
-            try:
-                logger.debug("Writing to file")
-                img.write(image)
-            except Exception as e:
-                print(f"Error: {e}")
-                logger.exception(f"{e}")
-                logger.critical("Couldn't write to file")
-                sys.exit()
-            else:
-                logger.info(f"Saved file as {path}")
+    except OSError as e:
+        logger.exception(f"{e}")
+        logger.critical("Couldn't write to file")
+        sys.exit()
+
+    logger.info(f"Saved file as {path}")
+
 
 
 def set_image_background(path):

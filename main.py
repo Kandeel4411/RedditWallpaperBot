@@ -40,20 +40,13 @@ def main():
     login_config = config["Login"]
     reddit = bot.get_reddit(login=login_config)
 
-    # Getting user-specified subreddit
     subreddit_name = input("Enter the subreddit you want to access: ")
-    if not subreddit_name:
-        print("Error: Empty subreddit entered. Please try again.\n")
-        logger.critical("Empty subreddit entered")
-        sys.exit()
 
-    # Create subreddit object
     subreddit = bot.get_subreddit(reddit=reddit, name=subreddit_name)
 
     # Get picture submission based on 'Hot' sort
     picture = bot.get_picture_post(subreddit_sort=subreddit.hot())
 
-    # Printing title of picture
     print(f"Title: {picture.title}")
     print(f"Author: {picture.author.name}\n")
 
@@ -64,8 +57,8 @@ def main():
         r.raise_for_status()
         logger.info("Downloading Picture")
         logger.debug(f"Getting request from picture {r}")
-    except Exception as e:
-        print(f"Error: {e}. Please try again.")
+    except requests.RequestException as e:
+        print(f"Error: Connection broken; couldn't download image. Please try again.")
         logger.exception(f"{e}")
         logger.critical("Couldn't download image")
         sys.exit()
