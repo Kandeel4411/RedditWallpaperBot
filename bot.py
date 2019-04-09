@@ -6,9 +6,12 @@ import sys
 import praw
 import prawcore
 
+BOT_EXCEPTION = False
 SPI_SETDESKWALLPAPER = 20
 logger = logging.getLogger(__name__)
 
+class BotException(Exception):
+    """ A general exception class for bot """
 
 def get_reddit(login):
     try:
@@ -21,7 +24,7 @@ def get_reddit(login):
     except praw.exceptions.ClientException as e:
         logger.exception(f"{e}")
         logger.critical("Couldn't create Reddit object")
-        sys.exit()
+        check_exception(f"{e}")
     return reddit
 
 
@@ -35,7 +38,7 @@ def get_subreddit(reddit, name):
         )
         logger.exception(f"{e}")
         logger.critical(f"Couldn't create Subreddit Object")
-        sys.exit()
+        check_exception(f"{e}")
     return subreddit
 
 
@@ -67,20 +70,20 @@ and how it's sorted"""
         print(
             "Error: Invalid Subreddit. Please try again with valid Subreddit."
         )
-        sys.exit()
+        check_exception(f"{e}")
     except prawcore.RequestException as e:
         logger.exception(f"{e}")
         logger.critical("Couldn't establish connection")
         print(
             "Error: Failed to establish a new connection. Please check your connection and try again."
         )
-        sys.exit()
+        check_exception(f"{e}")
 
     print(
         "Error: No Picture found in subreddit."
         " Please try again with different Subreddit.")
     logger.critical("Couldn't find picture in Subreddit")
-    sys.exit()
+    check_exception(f"{e}")
 
 
 def save_image(path, image):
@@ -95,7 +98,7 @@ def save_image(path, image):
         print(f"Error : {e}")
         logger.exception(f"{e}")
         logger.critical("Couldn't create directory")
-        sys.exit()
+        check_exception(f"{e}")
 
     # Creating Image
     try:
@@ -107,11 +110,11 @@ def save_image(path, image):
         print(f"Error: {e}")
         logger.exception(f"{e}")
         logger.critical("Couldn't open file")
-        sys.exit()
+        check_exception(f"{e}")
     except OSError as e:
         logger.exception(f"{e}")
         logger.critical("Couldn't write to file")
-        sys.exit()
+        check_exception(f"{e}")
 
     logger.info(f"Saved file as {path}")
 
@@ -143,3 +146,15 @@ def set_image_background(image_path: str):
 def set_windows_background(image_path: str):
     ctypes.windll.user32.SystemParametersInfoW(
         SPI_SETDESKWALLPAPER, 0, image_path, 0)
+
+def raise_bot_exception(option: bool):
+    """ Takes option to throw BotException instead of sys.exit() or not. Initially False"""
+    global BOT_EXCEPTION
+    BOT_EXCEPTION = option
+
+def check_exception(message):
+    if BOT_EXCEPTION:
+        raise BotException(message)
+    else:
+        sys.exit()
+    

@@ -68,7 +68,7 @@ def main():
 
     # Getting picture path
     image_filename = picture.author.name + image_ext
-    image_path = pathlib.Path("images/").resolve() / image_filename
+    image_path = pathlib.Path(".").resolve() /"images"/ image_filename
 
     bot.save_image(path=image_path, image=r.content)
     bot.set_image_background(image_path=str(image_path))
