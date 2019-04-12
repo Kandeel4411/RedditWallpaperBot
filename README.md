@@ -1,6 +1,9 @@
 # RedditWallpaperBot
-A Bot for Reddit that gets top Hot sorted picture from a given Subreddit and sets it as background. (Windows only currently)
+A Bot for Reddit that gets top Hot sorted picture from a given Subreddit and sets it as background.
 
+## Supported OS
+ Windows, Mac and Linux(KDE, GNOME, LX(DE/QT), Mate)
+ 
 ## Prerequisite
 * Must have python3.6+ installed.
 
@@ -44,3 +47,6 @@ A Bot for Reddit that gets top Hot sorted picture from a given Subreddit and set
 ## Usage as Library:
 * <i> Notes: </i>
 If you want to import the bot functions, it by default uses sys.exit() to exit program once an error has been caught. You may want to use bot.raise_bot_exception(option=True) to raise BotExceptions instead that you can catch.
+
+### Acknowledgement:
+   https://github.com/Dextroz/Wallie for Linux & Mac support :).
