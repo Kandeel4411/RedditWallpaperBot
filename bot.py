@@ -1,7 +1,9 @@
 import ctypes
 import logging
 import os
+import subprocess
 import sys
+from platform import system
 
 import praw
 import prawcore
@@ -10,8 +12,10 @@ BOT_EXCEPTION = False
 SPI_SETDESKWALLPAPER = 20
 logger = logging.getLogger(__name__)
 
+
 class BotException(Exception):
     """ A general exception class for bot """
+
 
 def get_reddit(login):
     try:
@@ -24,7 +28,7 @@ def get_reddit(login):
     except praw.exceptions.ClientException as e:
         logger.exception(f"{e}")
         logger.critical("Couldn't create Reddit object")
-        check_exception(f"{e}")
+        check_bot_exception(f"{e}")
     return reddit
 
 
@@ -38,7 +42,7 @@ def get_subreddit(reddit, name):
         )
         logger.exception(f"{e}")
         logger.critical(f"Couldn't create Subreddit Object")
-        check_exception(f"{e}")
+        check_bot_exception(f"{e}")
     return subreddit
 
 
@@ -70,20 +74,20 @@ and how it's sorted"""
         print(
             "Error: Invalid Subreddit. Please try again with valid Subreddit."
         )
-        check_exception(f"{e}")
+        check_bot_exception(f"{e}")
     except prawcore.RequestException as e:
         logger.exception(f"{e}")
         logger.critical("Couldn't establish connection")
         print(
             "Error: Failed to establish a new connection. Please check your connection and try again."
         )
-        check_exception(f"{e}")
+        check_bot_exception(f"{e}")
 
     print(
         "Error: No Picture found in subreddit."
         " Please try again with different Subreddit.")
     logger.critical("Couldn't find picture in Subreddit")
-    check_exception(f"{e}")
+    check_bot_exception(f"{e}")
 
 
 def save_image(path, image):
@@ -98,7 +102,7 @@ def save_image(path, image):
         print(f"Error : {e}")
         logger.exception(f"{e}")
         logger.critical("Couldn't create directory")
-        check_exception(f"{e}")
+        check_bot_exception(f"{e}")
 
     # Creating Image
     try:
@@ -110,11 +114,11 @@ def save_image(path, image):
         print(f"Error: {e}")
         logger.exception(f"{e}")
         logger.critical("Couldn't open file")
-        check_exception(f"{e}")
+        check_bot_exception(f"{e}")
     except OSError as e:
         logger.exception(f"{e}")
         logger.critical("Couldn't write to file")
-        check_exception(f"{e}")
+        check_bot_exception(f"{e}")
 
     logger.info(f"Saved file as {path}")
 
@@ -129,8 +133,22 @@ def set_image_background(image_path: str):
         choice = input().lower()
         if choice == "y":
             logger.info(f"User choice: {choice}")
-            # Windows-only support currently
-            set_windows_background(image_path=image_path)
+
+            os_name = system()
+            os_support = {
+                "Windows": set_windows_background,
+                "Darwin": set_mac_background,
+                "Linux": set_linux_background
+            }
+
+            # Calls background function based on current OS
+            if os_name in os_support:
+                os_support[os_name](image_path=image_path)
+            else:
+                print("Error: Unsupported OS.")
+                logger.critical(f"Unsupported OS: {os_name}")
+                check_bot_exception("Unsupported OS")
+
             logger.debug("Set picture as background")
             print("Done.\n")
             break
@@ -144,17 +162,86 @@ def set_image_background(image_path: str):
 
 
 def set_windows_background(image_path: str):
-    ctypes.windll.user32.SystemParametersInfoW(
-        SPI_SETDESKWALLPAPER, 0, image_path, 0)
+    try:
+        ctypes.windll.user32.SystemParametersInfoW(
+            SPI_SETDESKWALLPAPER, 0, image_path, 0)
+    except WindowsError as e:
+        print("Failed to set Windows wallpaper. Please try again.")
+        logger.exception(e)
+        logger.critical("Couldn't set background")
+        check_bot_exception(e)
+
+
+def set_mac_background(image_path: str):
+    try:
+        mac_script = f"""osascript -e 'tell application "Finder" to set desktop picture to "{image_path}" as POSIX file'"""
+        subprocess.run(mac_script, shell=True)
+    except subprocess.CalledProcessError as e:
+        print("Failed to set Mac wallpaper. Please try again.")
+        logger.exception(e)
+        logger.critical("Couldn't set background")
+        check_bot_exception(e)
+
+
+def set_linux_background(image_path: str):
+    distro_script = get_linux_distro(image_path=image_path)
+    if distro_script is not None:
+        try:
+            subprocess.run(distro_script, shell=true)
+        except subprocess.CalledProcessError as e:
+            print("Failed to set Linux wallpaper. Please try again.")
+            logger.exception(e)
+            logger.critical("Couldn't set background")
+            check_bot_exception(e)
+    else:
+        print("Error: Unsupported Linux Distro, sorry.")
+        logger.critical("Unsupported Linux Distro")
+        check_bot_exception("Unsupported Linux Distro")
+
+
+def get_linux_distro(image_path: set_image_background):
+    """ Returns:
+            None   # if Linux distro is not supported.
+            string # script to change background for the current distro.
+        Credit: https://github.com/Dextroz/Wallie"""
+
+    distro = os.environ.get("DESKTOP_SESSION")
+    if os.environ.get("KDE_FULL_SESSION") == "true":
+        distro_script = f"""
+                    qdbus org.kde.plasmashell /PlasmaShell org.kde.PlasmaShell.evaluateScript '
+                        var allDesktops = desktops();
+                        print (allDesktops);
+                        for (i=0;i<allDesktops.length;i++) {{
+                            d = allDesktops[i];
+                            d.wallpaperPlugin = "org.kde.image";
+                            d.currentConfigGroup = Array("Wallpaper",
+                                                   "org.kde.image",
+                                                   "General");
+                            d.writeConfig("Image", "file:///{image_path}")
+                        }}
+                    '
+                """
+    elif distro == "Lubuntu":
+        distro_script = f"pcmanfm-qt -w {image_path}"
+    elif distro == "ubuntu":
+        distro_script = (
+            f"gsettings set org.gnome.desktop.background picture-uri file://{image_path}"
+        )
+    elif distro == "mate":
+        distro_script = f"gsettings set org.mate.background picture-filename {image_path}"
+    else:
+        distro_script = None
+    return distro_script
+
 
 def raise_bot_exception(option: bool):
     """ Takes option to throw BotException instead of sys.exit() or not. Initially False"""
     global BOT_EXCEPTION
     BOT_EXCEPTION = option
 
-def check_exception(message):
+
+def check_bot_exception(message):
     if BOT_EXCEPTION:
         raise BotException(message)
     else:
         sys.exit()
-    
