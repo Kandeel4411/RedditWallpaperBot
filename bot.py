@@ -201,7 +201,7 @@ def set_linux_background(image_path: str):
             logger.critical("Couldn't set background")
             check_bot_exception(e)
     else:
-        print("Error: Unsupported Linux Distro, sorry.")
+        print("Error: Unsupported Linux environment.")
         logger.critical("Unsupported Linux Distro")
         check_bot_exception("Unsupported Linux Distro")
 
