@@ -1,7 +1,7 @@
 # RedditWallpaperBot
 A Bot for Reddit that gets top Hot sorted picture from a given Subreddit and sets it as background.
 
-## Supported OS
+## Supported OS & Environments
  Windows, Mac and Linux(KDE, GNOME, LX(DE/QT), Mate)
  
 ## Prerequisite
