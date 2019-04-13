@@ -75,11 +75,18 @@ and how it's sorted"""
             "Error: Invalid Subreddit. Please try again with valid Subreddit."
         )
         check_bot_exception(f"{e}")
-    except prawcore.exceptions.RequestException as e:
+    except prawcore.RequestException as e:
         logger.exception(f"{e}")
         logger.critical("Couldn't establish connection")
         print(
-            "Error: Failed to establish a new connection. Please check your connection or verify your client_ID and client_secret and try again."
+            "Error: Failed to establish a new connection. Please check your connection and try again."
+        )
+        check_bot_exception(f"{e}")
+    except prawcore.exceptions.ResponseException as e:
+        logger.exception(f"{e}")
+        logger.critical("Invalid client_ID or client_secret")
+        print(
+            "Error: Invalid client_Id or client_secret. Please check your credentials and try again."
         )
         check_bot_exception(f"{e}")
 
