@@ -1,4 +1,4 @@
-certifi==2019.3.9
+certifi
 chardet==3.0.4
 idna==2.8
 praw==6.1.1
