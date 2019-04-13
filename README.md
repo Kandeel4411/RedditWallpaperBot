@@ -16,7 +16,10 @@ A Bot for Reddit that gets top Hot sorted picture from a given Subreddit and set
 
   * In etc/config.ini add your client id and client secret from the app you just created. Client id is the id underneath the name of the app. Client secret is labeled.
 
-<i>(Installing in closed environment)</i>:
+  * Choose one of the following methods:
+  
+  
+<i>(Installing in closed environment) Recommended</i>:
   * Install pipenv through pip. <br>
   ` pip install pipenv`
   
@@ -25,9 +28,11 @@ A Bot for Reddit that gets top Hot sorted picture from a given Subreddit and set
 
  #### Or:
   
+  
  <i>(Installing globally)</i>:
   * Open the extracted folder in terminal and run: <br>
   ` pip install -r requirements.txt `
+
 
 ## Usage:
   ![Usage Demo](https://media.giphy.com/media/Tk0hzmccJ2rLlbRZxT/giphy.gif)
@@ -44,9 +49,11 @@ A Bot for Reddit that gets top Hot sorted picture from a given Subreddit and set
   * Open extracted folder and run main.py script directly by double clicking.
   <br>
 
+
 ## Usage as Library:
 * <i> Notes: </i>
 If you want to import the bot functions, it by default uses sys.exit() to exit program once an error has been caught. You may want to use bot.raise_bot_exception(option=True) to raise BotExceptions instead that you can catch.
+
 
 ### Acknowledgement:
    https://github.com/Dextroz/Wallie for Linux & Mac support :).
