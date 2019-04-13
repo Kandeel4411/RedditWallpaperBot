@@ -13,9 +13,11 @@ A Bot for Reddit that gets top Hot sorted picture from a given Subreddit and set
   * Extract folder to desired location
   
   * With the Reddit account that the bot will use go to Preferences -> Apps and create an app. Pick any name, choose script, and set the redirect url to http://localhost. Description and about url can be blank.
-
+  
+  i.e: <a href="https://ibb.co/48VqX6s"><img src="https://i.ibb.co/F5DrySs/eeeeee.png" alt="eeeeee" border="0" /></a>
+  
   * In etc/config.ini add your client id and client secret from the app you just created. Client id is the id underneath the name of the app. Client secret is labeled.
-
+  
   * Choose one of the following methods:
   
   
