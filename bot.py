@@ -194,7 +194,7 @@ def set_linux_background(image_path: str):
     distro_script = get_linux_distro(image_path=image_path)
     if distro_script is not None:
         try:
-            subprocess.run(distro_script, shell=true)
+            subprocess.run(distro_script, shell=True)
         except subprocess.CalledProcessError as e:
             print("Failed to set Linux wallpaper. Please try again.")
             logger.exception(e)
