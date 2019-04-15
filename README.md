@@ -2,7 +2,7 @@
 A Bot for Reddit that gets top Hot sorted picture from a given Subreddit and sets it as background.
 
 ## Supported OS & Environments
- Windows, Mac and Linux(KDE, GNOME, LX(DE/QT), Mate)
+ Windows, Mac and Linux(Ubuntu, Linux Mint)
  
 ## Prerequisite
 * Must have python3.6+ installed.
@@ -58,4 +58,4 @@ If you want to import the bot functions, it by default uses sys.exit() to exit p
 
 
 ### Acknowledgement:
-   https://github.com/Dextroz/Wallie for Linux & Mac support :).
+   https://github.com/Dextroz/Wallie for Mac support.

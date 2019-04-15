@@ -3,8 +3,8 @@ import logging
 import os
 import subprocess
 import sys
-from platform import system
 
+import distro
 import praw
 import prawcore
 
@@ -191,7 +191,7 @@ def set_mac_background(image_path: str):
 
 
 def set_linux_background(image_path: str):
-    distro_script = get_linux_distro(image_path=image_path)
+    distro_script = get_dist_script(image_path=image_path)
     if distro_script is not None:
         try:
             subprocess.run(distro_script, shell=True)
@@ -206,36 +206,19 @@ def set_linux_background(image_path: str):
         check_bot_exception("Unsupported Linux Distro")
 
 
-def get_linux_distro(image_path: set_image_background):
+def get_dist_script(image_path: set_image_background):
     """ Returns:
             None   # if Linux distro is not supported.
             string # script to change background for the current distro.
-        Credit: https://github.com/Dextroz/Wallie"""
+ """
 
-    distro = os.environ.get("DESKTOP_SESSION")
-    if os.environ.get("KDE_FULL_SESSION") == "true":
-        distro_script = f"""
-                    qdbus org.kde.plasmashell /PlasmaShell org.kde.PlasmaShell.evaluateScript '
-                        var allDesktops = desktops();
-                        print (allDesktops);
-                        for (i=0;i<allDesktops.length;i++) {{
-                            d = allDesktops[i];
-                            d.wallpaperPlugin = "org.kde.image";
-                            d.currentConfigGroup = Array("Wallpaper",
-                                                   "org.kde.image",
-                                                   "General");
-                            d.writeConfig("Image", "file:///{image_path}")
-                        }}
-                    '
-                """
-    elif distro == "Lubuntu":
-        distro_script = f"pcmanfm-qt -w {image_path}"
-    elif distro == "ubuntu":
+    dist = distro.id()
+    if dist == "ubuntu":
         distro_script = (
             f"gsettings set org.gnome.desktop.background picture-uri file://{image_path}"
         )
-    elif distro == "mate":
-        distro_script = f"gsettings set org.mate.background picture-filename {image_path}"
+    elif dist == "linuxmint":
+        distro_script = f"gsettings set org.cinnamon.desktop.background picture-uri file://{image_path}"
     else:
         distro_script = None
     return distro_script
