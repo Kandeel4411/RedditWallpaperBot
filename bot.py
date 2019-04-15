@@ -7,6 +7,7 @@ import sys
 import distro
 import praw
 import prawcore
+from platform import system
 
 BOT_EXCEPTION = False
 SPI_SETDESKWALLPAPER = 20
