@@ -37,6 +37,8 @@ def get_subreddit(reddit, name):
     """Returns subreddit based on given reddit object and subreddit name"""
     try:
         subreddit = reddit.subreddit(name)
+
+    # Exception thrown when name is empty string
     except TypeError as e:
         print(
             "Error: Invalid Subreddit. Please try again with valid Subreddit.\n"
@@ -69,6 +71,8 @@ and how it's sorted"""
                 logger.debug("Finished Iteration")
                 return submission
             logger.debug(f"submission: {submission} No Picture")
+
+    # Exception thrown when subreddit is not found
     except prawcore.exceptions.Redirect as e:
         logger.exception(f"{e}")
         logger.critical("Couldn't access subreddit")
@@ -76,6 +80,7 @@ and how it's sorted"""
             "Error: Invalid Subreddit. Please try again with valid Subreddit."
         )
         check_bot_exception(f"{e}")
+
     except prawcore.RequestException as e:
         logger.exception(f"{e}")
         logger.critical("Couldn't establish connection")
@@ -83,6 +88,8 @@ and how it's sorted"""
             "Error: Failed to establish a new connection. Please check your connection and try again."
         )
         check_bot_exception(f"{e}")
+
+    # Exception thrown when the reddit object couldn't login
     except prawcore.exceptions.ResponseException as e:
         logger.exception(f"{e}")
         logger.critical("Invalid client_ID or client_secret")
@@ -134,11 +141,10 @@ def save_image(path, image):
 def set_image_background(image_path: str):
     """Sets given image image_path as background """
 
-    print("Set picture as background? [Y/N] : ", end="")
     logger.debug("Starting loop")
     while True:
         logger.debug("Getting user input")
-        choice = input().lower()
+        choice = input("Set picture as background? [Y/N] : ").lower()
         if choice == "y":
             logger.info(f"User choice: {choice}")
 
