@@ -102,7 +102,7 @@ and how it's sorted"""
         "Error: No Picture found in subreddit."
         " Please try again with different Subreddit.")
     logger.critical("Couldn't find picture in Subreddit")
-    check_bot_exception(f"{e}")
+    check_bot_exception("No picture posts in the defined limit")
 
 
 def save_image(path, image):
