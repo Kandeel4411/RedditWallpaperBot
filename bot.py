@@ -19,6 +19,7 @@ class BotException(Exception):
 
 
 def get_reddit(login):
+    """ Returns logged-in reddit object based on given login information"""
     try:
         reddit = praw.Reddit(
             client_id=login["client_id"],
@@ -176,6 +177,7 @@ def set_image_background(image_path: str):
 
 
 def set_windows_background(image_path: str):
+    """ Sets given image path as background for Windows 64-bit"""
     try:
         ctypes.windll.user32.SystemParametersInfoW(
             SPI_SETDESKWALLPAPER, 0, image_path, 0)
@@ -187,6 +189,7 @@ def set_windows_background(image_path: str):
 
 
 def set_mac_background(image_path: str):
+    """ Sets given image path as background for Mac using osascript """
     try:
         mac_script = f"""osascript -e 'tell application "Finder" to set desktop picture to "{image_path}" as POSIX file'"""
         subprocess.run(mac_script, shell=True)
@@ -198,6 +201,7 @@ def set_mac_background(image_path: str):
 
 
 def set_linux_background(image_path: str):
+    """ Sets given image path as background for supported Linux distributions """
     distro_script = get_dist_script(image_path=image_path)
     if distro_script is not None:
         try:
@@ -238,6 +242,7 @@ def raise_bot_exception(option: bool):
 
 
 def check_bot_exception(message):
+    """ Based on global BOT_EXCEPTION variable, raises error or exits script """
     if BOT_EXCEPTION:
         raise BotException(message)
     else:
