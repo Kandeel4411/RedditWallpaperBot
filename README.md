@@ -53,7 +53,7 @@ A Bot for Reddit that gets top Hot sorted picture from a given Subreddit and set
   
 ## Running the tests:
 
-Tests are written using the <a href="https://github.com/pytest-dev/pytest">pytest</a> framework. <br>
+Tests are written using the [pytest](https://github.com/pytest-dev/pytest) framework. <br>
 
 Open terminal and navigate to the project directory
 * If you installed globally run:<br>
@@ -66,9 +66,9 @@ Open terminal and navigate to the project directory
      `pytest`
 
 ## Importing:
-* <i> Notes: </i>
+*  *Notes:*
 If you want to import the bot functions, it by default uses sys.exit() to exit program once an error has been caught. You may want to use bot.raise_bot_exception(option=True) to raise BotExceptions instead that you can catch.
 
 
 ### Acknowledgement:
-   https://github.com/Dextroz/Wallie for Mac support.
+   [Wallie](https://github.com/Dextroz/Wallie) for Mac support.
