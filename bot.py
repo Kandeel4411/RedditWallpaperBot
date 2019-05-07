@@ -108,19 +108,9 @@ and how it's sorted"""
 
 def save_image(path, image):
     """Saves image with given name and contents in bytes to image folder """
-    # Creating directory if it doesn't exist
-    try:
-        logger.debug("Creating image directory")
-        os.makedirs(os.path.dirname(path))
-    except FileExistsError:
-        logger.error("Directory already exists")
-    except OSError:
-        print(f"Error : {e}")
-        logger.exception(f"{e}")
-        logger.critical("Couldn't create directory")
-        check_bot_exception("Couldn't create directory")
 
-    # Creating Image
+    create_image_folder(path=path)
+
     try:
         logger.debug(f"Opening {path}")
         with open(path, "wb") as img_file:
@@ -135,8 +125,20 @@ def save_image(path, image):
         logger.exception(f"{e}")
         logger.critical("Couldn't write to file")
         check_bot_exception("Couldn't write to file")
-
     logger.info(f"Saved file as {path}")
+
+
+def create_image_folder(path):
+    try:
+        logger.debug("Creating image directory")
+        os.makedirs(os.path.dirname(path))
+    except FileExistsError:
+        logger.error("Directory already exists")
+    except PermissionError as e:
+        print(f"Error : {e}")
+        logger.exception(f"{e}")
+        logger.critical("Couldn't create directory")
+        check_bot_exception("Couldn't create directory")
 
 
 def set_image_background(image_path: str):
