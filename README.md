@@ -1,4 +1,4 @@
-# RedditWallpaperBot
+# :sparkler: RedditWallpaperBot :crystal_ball:
 A Bot for Reddit that gets top Hot sorted picture from a given Subreddit and sets it as background.
 
 
@@ -10,7 +10,8 @@ A Bot for Reddit that gets top Hot sorted picture from a given Subreddit and set
 * Must have python3.6+ installed.
 
 
-## Installation:
+## Installation: :hammer:
+
   * Download the repository by clicking the green "Clone or download" button on the top-right of the repository's main page, then click on "Download ZIP"<br>
   
   * Extract folder to desired location
@@ -55,7 +56,8 @@ A Bot for Reddit that gets top Hot sorted picture from a given Subreddit and set
   * Open extracted folder and run main.py script directly by double clicking.
   <br>
   
-## Running the tests:
+## Running the tests: :wrench:
+
 
 Tests are written using the [pytest](https://github.com/pytest-dev/pytest) framework. <br>
 
@@ -70,7 +72,8 @@ Open terminal and navigate to the project directory
      `pytest`
 
 
-## Importing:
+## Importing: :package:
+
 *  *Notes:*
 If you want to import the bot functions, it by default uses sys.exit() to exit program once an error has been caught. You may want to use bot.raise_bot_exception(option=True) to raise BotExceptions instead that you can catch.
 
