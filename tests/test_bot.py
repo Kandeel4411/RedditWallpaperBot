@@ -1,4 +1,5 @@
 import configparser
+from pathlib import Path
 
 import praw
 import pytest
@@ -82,3 +83,28 @@ def test_get_picture_post():
     picture = bot.get_picture_post(subreddit_sort=subreddit.hot())
 
     assert picture in subreddit.hot()
+
+
+def test_create_image_folder():
+    """ Tests create_image_folder() to create directory """
+
+    fake_path = "fake_images/"
+    bot.create_image_folder(path=fake_path)
+    assert Path.exists(Path(fake_path)), "Couldn't find image directory"
+
+    # Removing test path
+    Path.rmdir(Path(fake_path))
+
+
+def test_save_image():
+    """ Tests save_image to create image"""
+
+    fake_path = "fake_images/Fakeimage.jpg"
+    fake_image = b"FakeFakeFake"
+
+    bot.save_image(path=fake_path, image=fake_image)
+    assert Path.exists(Path(fake_path)), "Fake image wasn't created"
+
+    # Removing test path & image
+    Path.unlink(Path(fake_path))
+    Path.rmdir(Path(fake_path).parent)
