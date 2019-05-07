@@ -11,6 +11,8 @@ from platform import system
 
 BOT_EXCEPTION = False
 SPI_SETDESKWALLPAPER = 20
+
+
 logger = logging.getLogger(__name__)
 
 
@@ -42,7 +44,8 @@ def get_subreddit(reddit, name):
     # Exception thrown when name is empty string
     except TypeError as e:
         print(
-            "Error: Invalid Subreddit. Please try again with valid Subreddit.\n"
+            "Error: Invalid Subreddit."
+            " Please try again with valid Subreddit.\n"
         )
         logger.exception(f"{e}")
         logger.critical(f"Couldn't create Subreddit Object")
@@ -64,9 +67,9 @@ and how it's sorted"""
         for submission in subreddit_sort:
             # Is an image tagged post which isn't a gif
             if (
-                hasattr(submission, "post_hint")
-                and submission.post_hint == "image"
-                and os.path.splitext(submission.url)[1] != ".gif"
+                hasattr(submission, "post_hint") and
+                submission.post_hint == "image"and
+                os.path.splitext(submission.url)[1] != ".gif"
             ):
                 logger.info(f"{submission} Has Picture ")
                 logger.debug("Finished Iteration")
@@ -86,7 +89,8 @@ and how it's sorted"""
         logger.exception(f"{e}")
         logger.critical("Couldn't establish connection")
         print(
-            "Error: Failed to establish a new connection. Please check your connection and try again."
+            "Error: Failed to establish a new connection."
+            " Please check your connection and try again."
         )
         check_bot_exception(f"{e}")
 
@@ -95,13 +99,15 @@ and how it's sorted"""
         logger.exception(f"{e}")
         logger.critical("Invalid client_ID or client_secret")
         print(
-            "Error: Invalid client_Id or client_secret. Please check your credentials and try again."
+            "Error: Invalid client_Id or client_secret."
+            " Please check your credentials and try again."
         )
         check_bot_exception(f"{e}")
 
     print(
         "Error: No Picture found in subreddit."
-        " Please try again with different Subreddit.")
+        " Please try again with different Subreddit."
+    )
     logger.critical("Couldn't find picture in Subreddit")
     check_bot_exception("No picture posts in the defined limit")
 
@@ -201,7 +207,7 @@ def set_mac_background(image_path: str):
 
 
 def set_linux_background(image_path: str):
-    """ Sets given image path as background for supported Linux distributions """
+    """Sets given image path as background for supported Linux distributions"""
     distro_script = get_dist_script(image_path=image_path)
     if distro_script is not None:
         try:
@@ -236,13 +242,14 @@ def get_dist_script(image_path: set_image_background):
 
 
 def raise_bot_exception(option: bool):
-    """ Takes option to throw BotException instead of sys.exit() or not. Initially False"""
+    """ Takes option to throw BotException instead of sys.exit() or not.
+    Initially False"""
     global BOT_EXCEPTION
     BOT_EXCEPTION = option
 
 
 def check_bot_exception(message):
-    """ Based on global BOT_EXCEPTION variable, raises error or exits script """
+    """Based on global BOT_EXCEPTION variable, raises error or exits script"""
     if BOT_EXCEPTION:
         raise BotException(message)
     else:
