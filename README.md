@@ -1,11 +1,14 @@
 # RedditWallpaperBot
 A Bot for Reddit that gets top Hot sorted picture from a given Subreddit and sets it as background.
 
+
 ## Supported OS & Environments
  Windows, Mac and Linux(Ubuntu, Linux Mint)
  
+ 
 ## Prerequisite
 * Must have python3.6+ installed.
+
 
 ## Installation:
   * Download the repository by clicking the green "Clone or download" button on the top-right of the repository's main page, then click on "Download ZIP"<br>
@@ -34,6 +37,7 @@ A Bot for Reddit that gets top Hot sorted picture from a given Subreddit and set
  <i>(Installing globally)</i>:
   * Open the extracted folder in terminal and run: <br>
   ` pip install -r requirements.txt `
+
 
 
 ## Usage:
@@ -65,9 +69,11 @@ Open terminal and navigate to the project directory
     - Close and re-open the terminal to the project directory and run:<br>
      `pytest`
 
+
 ## Importing:
 *  *Notes:*
 If you want to import the bot functions, it by default uses sys.exit() to exit program once an error has been caught. You may want to use bot.raise_bot_exception(option=True) to raise BotExceptions instead that you can catch.
+
 
 
 ### Acknowledgement:
