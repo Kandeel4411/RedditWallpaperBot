@@ -50,7 +50,7 @@ A Bot for Reddit that gets top Hot sorted picture from a given Subreddit and set
 
   * Open extracted folder and run main.py script directly by double clicking.
   <br>
-  <br>
+  
 ## Running the tests:
 
 Tests are written using the <a href="https://github.com/pytest-dev/pytest">pytest</a> framework. <br>
