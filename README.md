@@ -50,9 +50,22 @@ A Bot for Reddit that gets top Hot sorted picture from a given Subreddit and set
 
   * Open extracted folder and run main.py script directly by double clicking.
   <br>
+  <br>
+## Running the tests:
 
+Tests are written using the <a href="https://github.com/pytest-dev/pytest">pytest</a> framework. <br>
 
-## Usage as Library:
+Open terminal and navigate to the project directory
+* If you installed globally run:<br>
+`pytest`
+
+* If you installed using the pipenv method:<br>
+    - Run the following command to install pytest:<br>
+     ` pipenv install --dev` 
+    - Close and re-open the terminal to the project directory and run:<br>
+     `pytest`
+
+## Importing:
 * <i> Notes: </i>
 If you want to import the bot functions, it by default uses sys.exit() to exit program once an error has been caught. You may want to use bot.raise_bot_exception(option=True) to raise BotExceptions instead that you can catch.
 
