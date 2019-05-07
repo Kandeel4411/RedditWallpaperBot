@@ -22,17 +22,11 @@ class BotException(Exception):
 
 def get_reddit(login):
     """ Returns logged-in reddit object based on given login information"""
-    try:
-        reddit = praw.Reddit(
-            client_id=login["client_id"],
-            client_secret=login["client_secret"],
-            user_agent=login["user_agent"]
-        )
-
-    except praw.exceptions.ClientException as e:
-        logger.exception(f"{e}")
-        logger.critical("Couldn't create Reddit object")
-        check_bot_exception(f"{e}")
+    reddit = praw.Reddit(
+        client_id=login["client_id"],
+        client_secret=login["client_secret"],
+        user_agent=login["user_agent"]
+    )
     return reddit
 
 
@@ -49,7 +43,7 @@ def get_subreddit(reddit, name):
         )
         logger.exception(f"{e}")
         logger.critical(f"Couldn't create Subreddit Object")
-        check_bot_exception(f"{e}")
+        check_bot_exception("Couldn't create Subreddit Object")
     return subreddit
 
 
@@ -83,7 +77,7 @@ and how it's sorted"""
         print(
             "Error: Invalid Subreddit. Please try again with valid Subreddit."
         )
-        check_bot_exception(f"{e}")
+        check_bot_exception("Couldn't access subreddit")
 
     except prawcore.RequestException as e:
         logger.exception(f"{e}")
@@ -92,7 +86,7 @@ and how it's sorted"""
             "Error: Failed to establish a new connection."
             " Please check your connection and try again."
         )
-        check_bot_exception(f"{e}")
+        check_bot_exception("Couldn't establish connection")
 
     # Exception thrown when the reddit object couldn't login
     except prawcore.exceptions.ResponseException as e:
@@ -102,7 +96,7 @@ and how it's sorted"""
             "Error: Invalid client_Id or client_secret."
             " Please check your credentials and try again."
         )
-        check_bot_exception(f"{e}")
+        check_bot_exception("Invalid client_ID or client_secret")
 
     print(
         "Error: No Picture found in subreddit."
@@ -124,7 +118,7 @@ def save_image(path, image):
         print(f"Error : {e}")
         logger.exception(f"{e}")
         logger.critical("Couldn't create directory")
-        check_bot_exception(f"{e}")
+        check_bot_exception("Couldn't create directory")
 
     # Creating Image
     try:
@@ -136,11 +130,11 @@ def save_image(path, image):
         print(f"Error: {e}")
         logger.exception(f"{e}")
         logger.critical("Couldn't open file")
-        check_bot_exception(f"{e}")
+        check_bot_exception("Couldn't open file")
     except OSError as e:
         logger.exception(f"{e}")
         logger.critical("Couldn't write to file")
-        check_bot_exception(f"{e}")
+        check_bot_exception("Couldn't write to file")
 
     logger.info(f"Saved file as {path}")
 
