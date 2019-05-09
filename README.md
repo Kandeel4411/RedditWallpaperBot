@@ -23,21 +23,15 @@ A Bot for Reddit that gets top Hot sorted picture from a given Subreddit and set
   * In etc/config.ini add your client id and client secret from the app you just created. Client id is the id underneath the name of the app. Client secret is labeled.
   
   * Choose one of the following methods:
-  
-  
-<i>(Installing in closed environment) Recommended</i>:
-  * Install pipenv through pip. <br>
-  ` pip install pipenv`
-  
-  * Open the extracted folder in terminal and run pipenv install. <br>
-  ` cd RedditWallpaperBot-master && pipenv install `
-
- #### Or:
-  
-  
- <i>(Installing globally)</i>:
-  * Open the extracted folder in terminal and run: <br>
-  ` pip install -r requirements.txt `
+    - *Installing in closed environment (Recommended)*:
+      - Install pipenv through pip. <br>
+      ` pip install pipenv`
+      
+      - Open the extracted folder in terminal and run pipenv install. <br>
+      ` cd RedditWallpaperBot-master && pipenv install `
+    - *Installing globally*:
+        - Open the extracted folder in terminal and run: <br>
+        ` pip install -r requirements.txt `
 
 
 
