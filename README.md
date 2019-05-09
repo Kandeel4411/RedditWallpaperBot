@@ -18,7 +18,7 @@ A Bot for Reddit that gets top Hot sorted picture from a given Subreddit and set
   
   * With the Reddit account that the bot will use go to Preferences -> Apps and create an app. Pick any name, choose script, and set the redirect url to http://localhost. Description and about url can be blank.
   
-  i.e: <a href="https://ibb.co/48VqX6s"><img src="https://i.ibb.co/F5DrySs/eeeeee.png" alt="eeeeee" border="0" /></a>
+  i.e: ![Reddit App preferences](assets/redditClientCredentials.png)
   
   * In etc/config.ini add your client id and client secret from the app you just created. Client id is the id underneath the name of the app. Client secret is labeled.
   
@@ -42,7 +42,7 @@ A Bot for Reddit that gets top Hot sorted picture from a given Subreddit and set
 
 
 ## Usage:
-  ![Usage Demo](https://media.giphy.com/media/Tk0hzmccJ2rLlbRZxT/giphy.gif)
+  ![Usage Demo](assets/giphy.gif)
   
   <i>Skip this step if you installed globally </i>
   * Open extracted folder and run: <br>
