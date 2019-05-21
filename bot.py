@@ -193,7 +193,10 @@ def set_windows_background(image_path: str):
 def set_mac_background(image_path: str):
     """ Sets given image path as background for Mac using osascript """
     try:
-        mac_script = f"""osascript -e 'tell application "Finder" to set desktop picture to "{image_path}" as POSIX file'"""
+        mac_script = (
+            f"""osascript -e 'tell application "Finder" """
+            f""" to set desktop picture to "{image_path}" as POSIX file'"""
+        )
         subprocess.run(mac_script, shell=True)
     except subprocess.CalledProcessError as e:
         print("Failed to set Mac wallpaper. Please try again.")
@@ -228,10 +231,14 @@ def get_dist_script(image_path: set_image_background):
     dist = distro.id()
     if dist == "ubuntu":
         distro_script = (
-            f"gsettings set org.gnome.desktop.background picture-uri file://{image_path}"
+            f"gsettings set org.gnome.desktop.background "
+            f"picture-uri file://{image_path}"
         )
     elif dist == "linuxmint":
-        distro_script = f"gsettings set org.cinnamon.desktop.background picture-uri file://{image_path}"
+        distro_script = (
+            f"gsettings set org.cinnamon.desktop.background "
+            f"picture-uri file://{image_path}"
+        )
     else:
         distro_script = None
     return distro_script

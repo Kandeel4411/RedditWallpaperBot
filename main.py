@@ -57,7 +57,10 @@ def main():
         logger.info("Downloading Picture")
         logger.debug(f"Getting request from picture {r}")
     except requests.RequestException as e:
-        print(f"Error: Connection broken; couldn't download image. Please try again.")
+        print(
+            "Error: Connection broken; couldn't download image.",
+            "Please try again."
+        )
         logger.exception(f"{e}")
         logger.critical("Couldn't download image")
         sys.exit()
@@ -68,7 +71,7 @@ def main():
 
     # Getting picture path
     image_filename = picture.author.name + image_ext
-    image_path = pathlib.Path(".").resolve() /"images"/ image_filename
+    image_path = pathlib.Path(".").resolve() / "images" / image_filename
 
     bot.save_image(path=image_path, image=r.content)
     bot.set_image_background(image_path=str(image_path))
