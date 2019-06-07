@@ -75,3 +75,6 @@ If you want to import the bot functions, it by default uses sys.exit() to exit p
 
 ### Acknowledgement:
    * [Wallie](https://github.com/Dextroz/Wallie) for Mac support.
+
+### License:
+   * [MIT](https://github.com/Kandeel4411/RedditWallpaperBot/LICENSE)
