@@ -1,4 +1,5 @@
 import configparser
+import os
 from pathlib import Path
 
 import praw
@@ -7,9 +8,17 @@ import pytest
 import bot
 
 # Getting bot credentials
-config = configparser.RawConfigParser()
-config.read("etc/config.ini")
-login_config = config["Login"]
+if os.getenv("REDDIT_CLIENT_ID") is None:
+    config = configparser.RawConfigParser()
+    config.read("etc/config.ini")
+    login_config = config["Login"]
+else:
+    # For Travis testing
+    login_config = {
+        "client_id": os.getenv("REDDIT_CLIENT_ID"),
+        "client_secret": os.getenv("REDDIT_CLIENT_SECRET"),
+        "user_agent": os.getenv("REDDIT_USER_AGENT")
+    }
 
 # Turning on bot exception
 bot.raise_bot_exception(option=True)
