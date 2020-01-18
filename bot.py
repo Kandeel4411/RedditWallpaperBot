@@ -79,6 +79,7 @@ and how it's sorted"""
         )
         check_bot_exception("Couldn't access subreddit")
 
+    # Exception thrown on network/time out failure
     except prawcore.RequestException as e:
         logger.exception(f"{e}")
         logger.critical("Couldn't establish connection")
@@ -141,41 +142,48 @@ def create_image_folder(path):
         check_bot_exception("Couldn't create directory")
 
 
-def set_image_background(image_path: str):
-    """Sets given image image_path as background """
+def set_image_background(image_path: str, prompt=None):
+    """Prompts given image path to be set as background.
+ if prompt exists, uses that as prompt instead. """
 
+    choice = user_prompt(
+        "Set picture as background? [Y/N] : "
+    ) if prompt is None else prompt
+
+    if choice:
+        os_name = system()
+        os_support = {
+            "Windows": set_windows_background,
+            "Darwin": set_mac_background,
+            "Linux": set_linux_background
+        }
+
+        # Calls background function based on current OS
+        if os_name in os_support:
+            os_support[os_name](image_path=image_path)
+        else:
+            print("Error: Unsupported OS.")
+            logger.critical(f"Unsupported OS: {os_name}")
+            check_bot_exception("Unsupported OS")
+
+        logger.debug("Set picture as background")
+        print("Done.\n")
+    else:
+        logger.debug("Displaying image full path")
+        print(f"Image path is : {image_path}")
+
+
+def user_prompt(message: str):
+    """ Prompts user continously until he enters [Y/N] and returns choice as boolean """
     logger.debug("Starting loop")
     while True:
-        logger.debug("Getting user input")
-        choice = input("Set picture as background? [Y/N] : ").lower()
-        if choice == "y":
+        choice = input(message).lower()
+        if choice == "n":
             logger.info(f"User choice: {choice}")
-
-            os_name = system()
-            os_support = {
-                "Windows": set_windows_background,
-                "Darwin": set_mac_background,
-                "Linux": set_linux_background
-            }
-
-            # Calls background function based on current OS
-            if os_name in os_support:
-                os_support[os_name](image_path=image_path)
-            else:
-                print("Error: Unsupported OS.")
-                logger.critical(f"Unsupported OS: {os_name}")
-                check_bot_exception("Unsupported OS")
-
-            logger.debug("Set picture as background")
-            print("Done.\n")
-            break
-        elif choice == "n":
+            return False
+        elif choice == "y":
             logger.info(f"User choice: {choice}")
-            logger.debug("Displaying image full path")
-            print(
-                f"Image path is : {image_path}"
-            )
-            break
+            return True
 
 
 def set_windows_background(image_path: str):

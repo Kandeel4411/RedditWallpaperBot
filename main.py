@@ -28,7 +28,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-def main():
+def main(cmd_args):
     logger.debug("Start of Program.")
     print("""
 +---------------------------+
@@ -40,7 +40,12 @@ def main():
     login_config = config["Login"]
     reddit = bot.get_reddit(login=login_config)
 
-    subreddit_name = input("Enter the subreddit you want to access: ")
+    # Checking if command line arguments exist
+    if len(cmd_args) != 0:
+        subreddit_name, prompt = parse_bot_arguments(args=cmd_args)
+    else:
+        subreddit_name = input("Enter the subreddit you want to access: ")
+        prompt = None
 
     subreddit = bot.get_subreddit(reddit=reddit, name=subreddit_name)
 
@@ -74,11 +79,27 @@ def main():
     image_path = pathlib.Path(".").resolve() / "images" / image_filename
 
     bot.save_image(path=image_path, image=r.content)
-    bot.set_image_background(image_path=str(image_path))
+    bot.set_image_background(image_path=str(image_path), prompt=prompt)
 
     print("Exiting..\n")
     logger.debug("End of program")
 
 
+def parse_bot_arguments(args):
+    """ Checks if the given arguments are in a valid format
+ and returns back the args in parsed form
+    """
+    logger.debug("Parsing command line arguments..")
+    subreddit_name = args[0]
+    try:
+        prompt = True if args[1].lower() == "-y" else False
+    except IndexError:
+        logger.exception("Prompt argument was missing, setting to default.")
+        prompt = None
+
+    logger.debug(f"Subreddit name: {subreddit_name}, prompt: {prompt}")
+    return subreddit_name, prompt
+
+
 if __name__ == "__main__":
-    main()
+    main(cmd_args=sys.argv[1:])
