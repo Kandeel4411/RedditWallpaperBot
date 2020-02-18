@@ -28,7 +28,7 @@ A Bot for Reddit that gets top Hot sorted picture from a given Subreddit and set
       ` pip install -r requirements.txt `
 
 
-## Usage:
+## Usage: :robot:
 
 ![Usage Demo](assets/giphy.gif)
 
@@ -42,8 +42,9 @@ A Bot for Reddit that gets top Hot sorted picture from a given Subreddit and set
   * Open extracted folder in terminal and run:  
   ` python main.py `  
 
-**Task scheduling:**
+## Task scheduling: :hourglass:
 You can follow [this](https://github.com/Kandeel4411/RedditWallpaperBot/wiki/Task-Scheduling-Guide) guide to schedule the bot to run daily!  
+  
 If you want to use the script directly, you can mention the subreddit name and prompt("-y" or otherwise) as such for automated downloading and setting:
 ```
 python main.py <subreddit_name> <prompt>
