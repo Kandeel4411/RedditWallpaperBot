@@ -43,7 +43,8 @@ A Bot for Reddit that gets top Hot sorted picture from a given Subreddit and set
   ` python main.py `  
 
 **Task scheduling:**
-If you want to use the script for daily task scheduling you can directly mention the subreddit name and prompt("-y" or otherwise) as such for automated downloading and setting:
+You can follow [this](https://github.com/Kandeel4411/RedditWallpaperBot/wiki/Task-Scheduling-Guide) guide to schedule the bot to run daily!  
+If you want to use the script directly, you can mention the subreddit name and prompt("-y" or otherwise) as such for automated downloading and setting:
 ```
 python main.py <subreddit_name> <prompt>
 ```
