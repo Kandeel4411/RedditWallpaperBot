@@ -1,7 +1,7 @@
 # :sparkler: RedditWallpaperBot :crystal_ball:
 [![Generic badge](https://img.shields.io/badge/Build-Passing-<COLOR>.svg)](https://shields.io/)
-[![PyPI license](https://img.shields.io/pypi/l/ansicolortags.svg)](https://pypi.python.org/pypi/ansicolortags/)
-[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/Naereen/StrapDown.js/graphs/commit-activity)
+[![GitHub license](https://img.shields.io/github/license/Naereen/StrapDown.js.svg)](https://github.com/Kandeel4411/RedditWallpaperBot/blob/master/LICENSE)
+[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/Kandeel4411/RedditWallpaperBot/pulse)
 [![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://www.python.org/)
 
 A Bot for Reddit that gets top Hot sorted picture from a given Subreddit and sets it as background.
