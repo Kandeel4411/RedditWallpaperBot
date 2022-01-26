@@ -36,7 +36,7 @@ def get_subreddit(reddit, name):
         subreddit = reddit.subreddit(name)
 
     # Exception thrown when name is empty string
-    except TypeError as e:
+    except (TypeError, ValueError) as e:
         print(
             "Error: Invalid Subreddit."
             " Please try again with valid Subreddit.\n"

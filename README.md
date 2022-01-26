@@ -10,7 +10,7 @@ A Bot for Reddit that gets top Hot sorted picture from a given Subreddit and set
  Windows, Mac and Linux(Ubuntu, Linux Mint)
 
 ## Prerequisite
-* Must have python3.6+ installed.
+* Must have python3.7+ installed.
 
 ## Installation: :hammer:
 
